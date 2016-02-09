@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">AppEsportsV3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Preferencias</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_registro">Registro</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_activity_preferencias">Preferencias</string>
+    <string name="action_logout">Cerrar sesión</string>
+    <string name="nombre">Torneo </string>
+    <string name="fecha_max">Fecha Inscripción </string>
+    <string name="max_participantes">Jugadores </string>
+    <string name="fecha_comienzo">Fecha Comienzo </string>
+    <string name="amigos">Amigos</string>
+    <string name="torneosactuales">Torneos Actuales</string>
+    <string name="idonline">ID Online</string>
+    <string name="amigo">Nombre</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="et_buscar">Escribe para buscar</string>
+    <string name="title_activity_select_imagen">SelectImagen</string>
+    <string name="title_activity_maps">Map</string>
+</resources>

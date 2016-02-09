@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Datos del usuario">
+        <SwitchPreference
+            android:key="sonido"
+            android:title="Sonido"
+            android:summary="Seleccione si quiere sonido en su App"/>
+        <SwitchPreference
+            android:key="vibracion"
+            android:title="Vibración"
+            android:summary="Seleccione si quiere vibración en su App"/>
+        <SwitchPreference
+            android:key="notificacion"
+            android:title="Notificación"
+            android:summary="Seleccione si quiere notificaciones en su App"/>
+        <ListPreference
+            android:key="tema"
+            android:title="Tema de la Aplicación"
+            android:summary="Elija el tema que desee para su aplicación"
+            android:dialogTitle="Elija el tema que desee para su aplicación"
+            android:entries="@array/temas"
+            android:entryValues="@array/temas"/>
+        <ListPreference
+            android:key="Idioma"
+            android:title="Idioma"
+            android:summary="Elija su idioma"
+            android:dialogTitle="Elija su idioma"
+            android:entries="@array/idiomas"
+            android:entryValues="@array/idiomas"/>
+    </PreferenceCategory>
+</PreferenceScreen>
