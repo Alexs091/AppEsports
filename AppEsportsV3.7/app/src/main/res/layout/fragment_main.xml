@@ -22,11 +22,21 @@
             android:layout_height="wrap_content"
             android:text="Usuario "
             android:id="@+id/NickUsuario"
-            android:textSize="20dp"
-            android:textStyle="bold"
+            android:textSize="22dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="50dp" />
+            android:layout_marginLeft="50dp"
+            android:textColor="#fc0011" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Torneos Actuales"
+        android:id="@+id/textView3"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textSize="30dp" />
 
     <ListView
         android:layout_width="match_parent"
