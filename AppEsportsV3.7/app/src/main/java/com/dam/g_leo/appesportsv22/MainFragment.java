@@ -250,7 +250,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             if (s == "ok") {
                 //Toast.makeText((MainActivity) getActivity(), "código avatar: " + avatar, Toast.LENGTH_SHORT).show();
                 imagenUsuario.setImageResource(mThumbIds[avatar]);
-                        adaptadorTorneos = new TorneoAdapter(getActivity(), listaTorneos, false);
+                adaptadorTorneos = new TorneoAdapter(getActivity(), listaTorneos, false);
                 lvstring.setAdapter(adaptadorTorneos);
                 Toast.makeText(getActivity(), "estoy entrando en onPostExecute", Toast.LENGTH_LONG).show();
                 lvstring.refreshDrawableState(); //esto probablemente no haga falta, lo puse por un error mío

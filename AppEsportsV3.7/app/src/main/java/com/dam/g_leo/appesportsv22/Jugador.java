@@ -30,6 +30,55 @@ public class Jugador implements Parcelable{
         }
     };
 
+
+    private int ID_Jugador;
+    private String Nick;
+    private String Password;
+    private String IDOnline;
+    private String Correo;
+    private double Latitud;
+    private double Longitud;
+    private String Telefono;
+    private int Avatar;
+
+    public Jugador() {
+    }
+
+    public Jugador(int ID_Jugador, String IDOnline, double latitud, double longitud, String nick) {
+        this.ID_Jugador = ID_Jugador;
+        this.IDOnline = IDOnline;
+        this.Latitud = latitud;
+        this.Longitud = longitud;
+        Nick = nick;
+    }
+
+    //TODO: creo que habría que usar este en vez del otro
+    public Jugador(int id_jugador, String nick, String IDOnline, double latitud, double longitud) {
+        this.ID_Jugador = id_jugador;
+        Nick = nick;
+        Password = "";
+        this.IDOnline = IDOnline;
+        Correo = "";
+        this.Latitud = latitud;
+        this.Longitud = longitud;
+    }
+
+    //Constructor chustero de antes de tener los campos teléfono y posición
+    public Jugador(String nick, String IDOnline) {
+        this.ID_Jugador = 0;
+        Nick = nick;
+        Password = "";
+        this.IDOnline = IDOnline;
+        Correo = "";
+    }
+
+    //Constructor para los content providers
+    public Jugador(int id_jugador, String nick, String IDOnline, String telefono) {
+        this(id_jugador, nick, IDOnline, 0, 0);
+        this.Telefono = telefono;
+    }
+
+
     public int getID_Jugador() {
         return ID_Jugador;
     }
@@ -78,49 +127,6 @@ public class Jugador implements Parcelable{
         this.Telefono = telefono;
     }
 
-    private int ID_Jugador;
-    private String Nick;
-    private String Password;
-    private String IDOnline;
-    private String Correo;
-    private double Latitud;
-    private double Longitud;
-    private String Telefono;
-
-    public Jugador(int ID_Jugador, String IDOnline, double latitud, double longitud, String nick) {
-        this.ID_Jugador = ID_Jugador;
-        this.IDOnline = IDOnline;
-        this.Latitud = latitud;
-        this.Longitud = longitud;
-        Nick = nick;
-    }
-
-    //TODO: creo que habría que usar este en vez del otro
-    public Jugador(int id_jugador, String nick, String IDOnline, double latitud, double longitud) {
-        this.ID_Jugador = id_jugador;
-        Nick = nick;
-        Password = "";
-        this.IDOnline = IDOnline;
-        Correo = "";
-        this.Latitud = latitud;
-        this.Longitud = longitud;
-    }
-
-    //Constructor chustero de antes de tener los campos teléfono y posición
-    public Jugador(String nick, String IDOnline) {
-        this.ID_Jugador = 0;
-        Nick = nick;
-        Password = "";
-        this.IDOnline = IDOnline;
-        Correo = "";
-    }
-
-    //Constructor para los content providers
-    public Jugador(int id_jugador, String nick, String IDOnline, String telefono) {
-        this(id_jugador, nick, IDOnline, 0, 0);
-        this.Telefono = telefono;
-    }
-
     public double getLatitud() {
         return Latitud;
     }
@@ -137,8 +143,9 @@ public class Jugador implements Parcelable{
         this.Longitud = longitud;
     }
 
-    public Jugador() {
-    }
+    public int getAvatar() {        return Avatar;    }
+
+    public void setAvatar(int avatar) {        Avatar = avatar;    }
 
     @Override
     public int describeContents() {
