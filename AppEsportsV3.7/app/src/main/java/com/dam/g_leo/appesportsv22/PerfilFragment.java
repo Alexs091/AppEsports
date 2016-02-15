@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +45,7 @@ public class PerfilFragment extends Fragment {
     TextView email;
     TextView telefono;
     TextView location;
-    ImageButton miImageButton;
+    ImageView miImageButton;
     ObtenerWebService hiloconexion;
     Jugador miJugador;
     boolean esAmigo;
@@ -72,7 +73,7 @@ public class PerfilFragment extends Fragment {
         email = (TextView)view.findViewById(R.id.email);
         telefono = (TextView)view.findViewById(R.id.telefono);
         location = (TextView)view.findViewById(R.id.location);
-        miImageButton = (ImageButton)view.findViewById(R.id.imageButton);
+        miImageButton = (ImageView)view.findViewById(R.id.imageButton);
 
         //TODO rellenar los campos con la select del jugador actual
         nombreUsuario.setText("");
@@ -82,7 +83,7 @@ public class PerfilFragment extends Fragment {
         location.setText("");
 
         hiloconexion = new ObtenerWebService();
-        hiloconexion.execute(((MainActivity)getActivity()).miUsuarioNick);
+        hiloconexion.execute(((MainActivity)getActivity()).otroJugadorNick);
 
         return view;
     }

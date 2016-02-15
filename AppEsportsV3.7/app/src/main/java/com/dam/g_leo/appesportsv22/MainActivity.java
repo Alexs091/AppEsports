@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity
     SQLiteDatabase sqLiteDatabase;
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
     public int miUsuarioID;
-    String miUsuarioNick;
+    String miUsuarioNick, otroJugadorNick;
 
 
     @Override
@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void abrirFragmentPerfil() {
+        otroJugadorNick = miUsuarioNick;
         //Paso 1: Obtener la instancia del administrador de fragmentos
         FragmentManager fragmentManager = getFragmentManager();
 

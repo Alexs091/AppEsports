@@ -3,6 +3,7 @@ package com.dam.g_leo.appesportsv22;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.AudioManager;
@@ -13,6 +14,7 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -82,6 +84,13 @@ public class AmigosFragment extends Fragment implements View.OnClickListener{
 
         adaptadorAmigos = new AmigoAdapter(getActivity(),listaAmigos);
         lvstring.setAdapter(adaptadorAmigos);
+        lvstring.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                ((MainActivity) getActivity()).otroJugadorNick = listaAmigos.get(position).getNick();
+                abrirFragmentPerfil();
+            }
+        });
 
         //Inicializar controles
         soundPool = new SoundPool(8, AudioManager.STREAM_MUSIC, 0);
@@ -214,5 +223,12 @@ public class AmigosFragment extends Fragment implements View.OnClickListener{
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
         }
+    }
+    public void abrirFragmentPerfil() {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        PerfilFragment fragment = new PerfilFragment();
+        fragmentTransaction.replace(R.id.layoutPrincipal, fragment);
+        fragmentTransaction.commit();
     }
 }
