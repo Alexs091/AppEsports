@@ -67,13 +67,7 @@ public class SugerirAmigosFragment extends Fragment implements View.OnClickListe
         bttn_amigos.setOnClickListener(this);
         adaptadorAmigos = new AmigoAdapter(getActivity(), listaWebService);
         lvstring.setAdapter(adaptadorAmigos);
-        lvstring.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                ((MainActivity) getActivity()).otroJugadorNick = listaDefinitiva.get(position).getNick();
-                abrirFragmentPerfil();
-            }
-        });
+
         return view;
     }
 
@@ -211,6 +205,13 @@ public class SugerirAmigosFragment extends Fragment implements View.OnClickListe
                 compararTelefonos();
                 adaptadorAmigos = new AmigoAdapter(getActivity(), listaDefinitiva);
                 lvstring.setAdapter(adaptadorAmigos);
+                lvstring.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> parent, View v,
+                                            int position, long id) {
+                        ((MainActivity) getActivity()).otroJugadorNick = listaDefinitiva.get(position).getNick();
+                        abrirFragmentPerfil();
+                    }
+                });
                 lvstring.refreshDrawableState(); //esto probablemente no haga falta, lo puse por un error mío
                 //pero no lo quito porque no me apetece probar si funciona sin esto
             } else {

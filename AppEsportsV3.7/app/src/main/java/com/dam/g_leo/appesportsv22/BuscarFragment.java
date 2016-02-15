@@ -1,12 +1,15 @@
 package com.dam.g_leo.appesportsv22;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -152,6 +155,13 @@ public class BuscarFragment extends Fragment implements View.OnClickListener {
 //                ListView lvstring = (ListView)view.findViewById(R.id.lvstring);
                 adaptadorAmigos = new AmigoAdapter(getActivity(),listaAmigos);
                 lvstring.setAdapter(adaptadorAmigos);
+                lvstring.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> parent, View v,
+                                            int position, long id) {
+                        ((MainActivity) getActivity()).otroJugadorNick = listaAmigos.get(position).getNick();
+                        abrirFragmentPerfil();
+                    }
+                });
                 lvstring.refreshDrawableState(); //esto probablemente no haga falta, lo puse por un error mío
                 //pero no lo quito porque no me apetece probar si funciona sin esto
             }
@@ -170,5 +180,12 @@ public class BuscarFragment extends Fragment implements View.OnClickListener {
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
         }
+    }
+    public void abrirFragmentPerfil() {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        PerfilFragment fragment = new PerfilFragment();
+        fragmentTransaction.replace(R.id.layoutPrincipal, fragment);
+        fragmentTransaction.commit();
     }
 }
