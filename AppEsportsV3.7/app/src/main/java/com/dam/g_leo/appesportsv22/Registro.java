@@ -241,7 +241,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
                     hiloconexion.execute(nombreUsuario.getText().toString(), contraseña.getText().toString(), email.getText().toString()
                             , battleTag.getText().toString(), Telefono.getText().toString(), String.valueOf(SelectImagen.posicionImagen),
                             String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
-                    SelectImagen.posicionImagen = -1;
+                    SelectImagen.posicionImagen = 6;
                     this.finish();
                 }
                 else{

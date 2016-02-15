@@ -53,8 +53,9 @@ public class PerfilFragment extends Fragment {
             R.drawable.profileicon13,
             R.drawable.profileicon23,
             R.drawable.profileicon24old,
-            R.drawable.profileicon29old
-    };
+            R.drawable.profileicon29old,
+            R.drawable.avataricon
+     };
 
     public PerfilFragment() {
         // Required empty public constructor

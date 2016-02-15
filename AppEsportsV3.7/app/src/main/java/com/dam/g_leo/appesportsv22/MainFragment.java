@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,7 @@ import java.util.List;
 public class MainFragment extends Fragment implements View.OnClickListener {
 
     SoundPool soundPool;
+    int avatar;
     TorneoAdapter adaptadorTorneos;
     List<Torneo> listaTorneos;
     ObtenerWebService1 hiloconexion1;
@@ -54,10 +56,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             R.drawable.profileicon13,
             R.drawable.profileicon23,
             R.drawable.profileicon24old,
-            R.drawable.profileicon29old
+            R.drawable.profileicon29old,
+            R.drawable.avataricon
     };
     ListView lvstring;
-    ImageButton imagenUsuario;
+    ImageView imagenUsuario;
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     //boolean haySonido;
     private OnFragmentInteractionListener mListener;
@@ -76,7 +79,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         TextView user = (TextView) view.findViewById(R.id.NickUsuario);
         user.setText(((MainActivity)getActivity()).miUsuarioNick);
-        imagenUsuario = (ImageButton)view.findViewById(R.id.ImagenUsuario);
+        imagenUsuario = (ImageView)view.findViewById(R.id.ImagenUsuario);
 
         lvstring = (ListView)view.findViewById(R.id.lvstring);
         hiloconexion1 = new ObtenerWebService1();
@@ -167,8 +170,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     //este hilo rellena los torneos
     public class ObtenerWebService1 extends AsyncTask<String, Integer, String> {
 
-        int avatar;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -248,7 +249,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         protected void onPostExecute(String s) {
 
             if (s == "ok") {
-                //Toast.makeText((MainActivity) getActivity(), "código avatar: " + avatar, Toast.LENGTH_SHORT).show();
+                Toast.makeText((MainActivity) getActivity(), "código avatar: " + avatar, Toast.LENGTH_SHORT).show();
                 imagenUsuario.setImageResource(mThumbIds[avatar]);
                 adaptadorTorneos = new TorneoAdapter(getActivity(), listaTorneos, false);
                 lvstring.setAdapter(adaptadorTorneos);
