@@ -19,8 +19,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -44,6 +47,7 @@ public class PerfilFragment extends Fragment {
     ImageButton miImageButton;
     ObtenerWebService hiloconexion;
     Jugador miJugador;
+    boolean esAmigo;
     static Integer[] mThumbIds = {
             R.drawable.profileicon10,
             R.drawable.profileicon13,
@@ -134,8 +138,7 @@ public class PerfilFragment extends Fragment {
 
             URL url = null;
             String devuelve = "";
-            String cadenaConexion = "";
-            cadenaConexion = "http://mucedal.hol.es/appesports/obtener_jugador_por_nick.php";
+            String cadenaConexion = "http://mucedal.hol.es/appesports/obtener_jugador_por_nick.php";
             cadenaConexion += "?nick=" + params[0];
 
 
@@ -213,16 +216,192 @@ public class PerfilFragment extends Fragment {
                 Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    //Amigar y desamigar
+    public class ObtenerWebService2 extends AsyncTask<String, Integer, String> {
 
         @Override
-        protected void onCancelled(String s) {
-            super.onCancelled(s);
+        protected String doInBackground(String... params) {
+
+            //String cadena = params[0];
+            String cadenaConexion;
+            if (esAmigo) {
+                cadenaConexion = "http://mucedal.hol.es/appesports/amigar.php";
+            } else {
+                cadenaConexion = "http://mucedal.hol.es/appesports/desamigar.php";
+            }
+
+            URL url = null;
+            try {
+                url = new URL(cadenaConexion);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            String devuelve = "";
+
+            try {
+                HttpURLConnection urlConn;
+
+                urlConn = (HttpURLConnection)url.openConnection();
+                urlConn.setDoInput(true);
+                urlConn.setDoOutput(true);
+                urlConn.setUseCaches(false);
+                urlConn.setRequestProperty("Content-Type", "application/json");
+                urlConn.setRequestProperty("Accept", "application/json");
+                urlConn.connect();
+
+                //Creo el Objeto JSON
+                JSONObject jsonParam = new JSONObject();
+                jsonParam.put("id_jugador", ((MainActivity)getActivity()).miUsuarioID );
+                jsonParam.put("id_amigo", miJugador.getID_Jugador());
+
+                // Envio los parámetros post.
+                OutputStream os = urlConn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(jsonParam.toString());
+                writer.flush();
+                writer.close();
+
+                int respuesta = urlConn.getResponseCode();
+
+                StringBuilder result = new StringBuilder();
+
+                if (respuesta == HttpURLConnection.HTTP_OK) {
+                    String line;
+                    BufferedReader br = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+                    while ((line = br.readLine()) != null) {
+                        result.append(line);
+                        //response+=line;
+                    }
+
+                    //Creamos un objeto JSONObject para poder acceder a los atributos (campos) del objeto.
+                    JSONObject respuestaJSON = new JSONObject(result.toString());   //Creo un JSONObject a partir del StringBuilder pasado a cadena
+                    //Accedemos al vector de resultados
+                    String resultJSON = respuestaJSON.getString("estado");   // estado es el nombre del campo en el JSON
+
+                    if (resultJSON.equals("1") || resultJSON == "1") {
+                        devuelve = "ok";
+                    } else if (resultJSON.equals("2") || resultJSON == "2") {
+                        devuelve = "error";
+                    }
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return devuelve;
         }
 
         @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
+        protected void onPostExecute(String s) {
+
+            if (s == "ok") {
+//                Toast.makeText(getApplicationContext(), "Registrado con éxito", Toast.LENGTH_LONG).show();
+//                finish();
+            }
+            else{
+//                Toast.makeText(getApplicationContext(), "Se produjo un error", Toast.LENGTH_SHORT).show();
+            }
+            //super.onPostExecute(aVoid);
         }
     }
+
+    //Comprobar si es amigo
+    public class ObtenerWebService3 extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String cadenaConexion = "http://mucedal.hol.es/appesports/comprobaramistad.php";
+            URL url = null;
+            try {
+                url = new URL(cadenaConexion);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            String devuelve = "";
+
+            try {
+                HttpURLConnection urlConn;
+
+                urlConn = (HttpURLConnection)url.openConnection();
+                urlConn.setDoInput(true);
+                urlConn.setDoOutput(true);
+                urlConn.setUseCaches(false);
+                urlConn.setRequestProperty("Content-Type", "application/json");
+                urlConn.setRequestProperty("Accept", "application/json");
+                urlConn.connect();
+
+                //Creo el Objeto JSON
+                JSONObject jsonParam = new JSONObject();
+                jsonParam.put("id_jugador", ((MainActivity)getActivity()).miUsuarioID );
+                jsonParam.put("id_amigo", miJugador.getID_Jugador());
+
+                // Envio los parámetros post.
+                OutputStream os = urlConn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(jsonParam.toString());
+                writer.flush();
+                writer.close();
+
+                int respuesta = urlConn.getResponseCode();
+
+                StringBuilder result = new StringBuilder();
+
+                if (respuesta == HttpURLConnection.HTTP_OK) {
+                    String line;
+                    BufferedReader br = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+                    while ((line = br.readLine()) != null) {
+                        result.append(line);
+                        //response+=line;
+                    }
+
+                    //Creamos un objeto JSONObject para poder acceder a los atributos (campos) del objeto.
+                    JSONObject respuestaJSON = new JSONObject(result.toString());   //Creo un JSONObject a partir del StringBuilder pasado a cadena
+                    //Accedemos al vector de resultados
+                    String resultJSON = respuestaJSON.getString("estado");   // estado es el nombre del campo en el JSON
+
+                    if (resultJSON.equals("1") || resultJSON == "1") {
+                        //son amigos
+                        devuelve = "ok";
+                    } else if (resultJSON.equals("2") || resultJSON == "2") {
+                        //no son amigos
+                        devuelve = "error";
+                    }
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return devuelve;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            if (s == "ok") {
+                esAmigo = true;
+            }
+            else{
+//                Toast.makeText(getApplicationContext(), "Se produjo un error", Toast.LENGTH_SHORT).show();
+            }
+            //super.onPostExecute(aVoid);
+        }
+    }
+
+
 
 }
