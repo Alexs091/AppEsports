@@ -11,6 +11,7 @@ import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -66,6 +67,13 @@ public class SugerirAmigosFragment extends Fragment implements View.OnClickListe
         bttn_amigos.setOnClickListener(this);
         adaptadorAmigos = new AmigoAdapter(getActivity(), listaWebService);
         lvstring.setAdapter(adaptadorAmigos);
+        lvstring.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                ((MainActivity) getActivity()).otroJugadorNick = listaDefinitiva.get(position).getNick();
+                abrirFragmentPerfil();
+            }
+        });
         return view;
     }
 
@@ -221,5 +229,11 @@ public class SugerirAmigosFragment extends Fragment implements View.OnClickListe
             super.onProgressUpdate(values);
         }
     }
-
+    public void abrirFragmentPerfil() {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        PerfilFragment fragment = new PerfilFragment();
+        fragmentTransaction.replace(R.id.layoutPrincipal, fragment);
+        fragmentTransaction.commit();
+    }
 }

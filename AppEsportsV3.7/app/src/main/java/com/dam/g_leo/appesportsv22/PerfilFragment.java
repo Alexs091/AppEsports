@@ -44,7 +44,6 @@ public class PerfilFragment extends Fragment {
     TextView battleTag;
     TextView email;
     TextView telefono;
-    TextView location;
     ImageView miImageButton;
     ObtenerWebService hiloconexion;
     Jugador miJugador;
@@ -72,7 +71,6 @@ public class PerfilFragment extends Fragment {
         battleTag = (TextView)view.findViewById(R.id.battleTag);
         email = (TextView)view.findViewById(R.id.email);
         telefono = (TextView)view.findViewById(R.id.telefono);
-        location = (TextView)view.findViewById(R.id.location);
         miImageButton = (ImageView)view.findViewById(R.id.imageButton);
 
         //TODO rellenar los campos con la select del jugador actual
@@ -80,7 +78,6 @@ public class PerfilFragment extends Fragment {
         battleTag.setText("");
         email.setText("");
         telefono.setText("");
-        location.setText("");
 
         hiloconexion = new ObtenerWebService();
         hiloconexion.execute(((MainActivity)getActivity()).otroJugadorNick);
@@ -211,7 +208,6 @@ public class PerfilFragment extends Fragment {
                 email.setText(miJugador.getCorreo());
                 telefono.setText(miJugador.getTelefono());
                 LatLng latLng = new LatLng(miJugador.getLatitud(), miJugador.getLongitud());
-                location.setText(latLng.toString()); //TODO este campo igual ni haría falta mostrarlo aquí
                 miImageButton.setImageResource(mThumbIds[miJugador.getAvatar()]);
             } else {
                 Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();

@@ -33,36 +33,89 @@
         android:id="@+id/nombreUsuario"
         android:layout_weight="1"
         android:gravity="center"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="#ff0101" />
 
-    <TextView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/battleTag"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:gravity="center_vertical">
 
-    <TextView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BattleTag:      "
+            android:id="@+id/textView4"
+            android:textColor="#0019fe" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/battleTag"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/email"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:gravity="center_vertical">
 
-    <TextView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email:      "
+            android:id="@+id/textView5"
+            android:textColor="#0019fe" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/email"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/telefono"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:gravity="center_vertical">
 
-    <TextView
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Teléfono:      "
+            android:id="@+id/textView6"
+            android:textColor="#0019fe" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/telefono"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/location"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:gravity="center_vertical|center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hacer amigo"
+            android:id="@+id/botonAmigar" />
+    </LinearLayout>
 
     <!--<DatePicker-->
     <!--android:layout_width="wrap_content"-->

@@ -8,26 +8,32 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <TextView
-            android:layout_width="0px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/nombre"
-            />
 
         <TextView
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:id="@+id/nombre"
-            />
+            android:layout_gravity="center_horizontal"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="#006dfc"
+            android:gravity="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/max_participantes"
-            />
+            android:textSize="15dp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="0px"
@@ -35,7 +41,6 @@
             android:layout_weight="1"
             android:id="@+id/max_participantes"
             />
-
     </LinearLayout>
 
     <LinearLayout
@@ -47,7 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/fecha_comienzo"
-            />
+            android:textSize="15dp"
+            android:textStyle="bold" />
         <TextView
             android:layout_width="0px"
             android:layout_height="wrap_content"
