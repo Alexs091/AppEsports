@@ -1,0 +1,65 @@
+-----Mejoras entrega 3-----
+
+//TODO//
+  Controlar la recogida de datos en perfil (Alex)
+  Cuando clicke en un jugador en BuscarJugador, o en Amigosfragment debe llevarte a su perfilFragment(Alex)
+  /*En perfilfragment saldra un boton que, dependiendo de donde vengas será hacer amigo, o quitar amigo(Alex)*/
+  En perfilFragment saldrá un botón que, dependiendo de si el jugador es amigo o no te permitirá hacerte amigo o 'desamigarte'(Alex)
+  Dejar perfilFragment bonito (Alex)
+  Cambiar iconos del mapa (Alex)
+  PerfilFragment -> si es amigo, botón de 'desamigar', si no, botón de 'amigar' (Marco)
+  Dividir en 2 selects el main fragment (para usuario, y lista de torneos) (Marco)
+  Incluir iconos en el Navigation Drawer. (Marco)
+
+//IN PROGRESS//
+  Insert/Select por servicios web. (Marco)
+
+//DONE//
+  Login: mantener logueado. (Marco)
+  Registro: insertar en BBDD. (Marco)
+  Nuevo fragment para buscar jugadores. (Marco) (Habría que mejorarlo si hay tiempo)
+  Utilizar contents provider para sugerir amigos. (Marco)
+  Select para Perfil con webservice (Marco)
+  Cargar fragment inicio tras loguearte. (Alex)
+  Recoger posición (latitud, longitud) en el registro. (Alex)
+  Opcion en Amigos: Mapa con los amigos(Alex)
+  Registro: rediseñar. (Alex)
+  Fragment de Torneo: opcion inscribir/desinscribir y lista de participantes con listview. (Alex)
+  cambiar imagen del perfil principal con las que se reciben de la base de datos(Alex)
+
+-----Pequeñas tonterías para rematar-----
+
+//TODO//
+  Quitar todos los TODO de debug (Marco)
+  Controlar botón 'atrás': que vaya al mainFragment (Alex)
+  Validar que el usuario ya existe de verdad, y no a modo cutre a pelo en el código
+  Quitar toast en amigos
+  Listas de torneos: reducir información
+
+//DONE//
+  Quitar label con las coordenadas en activity de login
+  Fijar todas las activities a portrait
+
+-----BBDD----- (Marco)
+Jugador //DONE
+  -Avatar
+  -Latitud
+  -Longitud
+  -Teléfono
+
+-----Servicios web----- (Marco)
+Jugador //DONE
+	-Login //DONE
+  -Registrar //DONE
+  -Perfil //DONE
+Torneo
+  -Mis torneos //DONE
+  -Torneos no inscrito //DONE
+  -Inscribir en torneo //DONE (solo php)
+  -Desinscribir/Desuscribir en torneo //DONE (solo php)
+Amigos
+  -Mis amigos //DONE
+  -Mis amigos (búsqueda por nombre) //DONE (solo php)
+  -Buscar jugador //DONE
+  -Añadir amigo //DONE (solo php)
+  -Amigos por contents provider //DONE
