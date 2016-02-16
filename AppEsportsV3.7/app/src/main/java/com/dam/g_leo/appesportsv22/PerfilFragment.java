@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,7 +36,7 @@ import java.net.URL;
  * {@link PerfilFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class PerfilFragment extends Fragment {
+public class PerfilFragment extends Fragment implements View.OnClickListener {
 
     private OnFragmentInteractionListener mListener;
     Spinner nacionalidad;
@@ -45,9 +45,14 @@ public class PerfilFragment extends Fragment {
     TextView email;
     TextView telefono;
     ImageView miImageButton;
+    Button botonAmigar;
     ObtenerWebService hiloconexion;
+    ObtenerWebService2 hiloAmigarDesamigar;
+    ObtenerWebService3 hiloComprobarAmigo;
     Jugador miJugador;
     boolean esAmigo;
+    static final String AGREGARAMIGO = "Agregar Amigo";
+    static final String BORRARAMIGO = "Borrar Amigo";
     static Integer[] mThumbIds = {
             R.drawable.profileicon10,
             R.drawable.profileicon13,
@@ -73,15 +78,29 @@ public class PerfilFragment extends Fragment {
         email = (TextView)view.findViewById(R.id.email);
         telefono = (TextView)view.findViewById(R.id.telefono);
         miImageButton = (ImageView)view.findViewById(R.id.imageButton);
+        botonAmigar = (Button)view.findViewById(R.id.botonAmigar);
+        botonAmigar.setOnClickListener(this);
 
-        //TODO rellenar los campos con la select del jugador actual
+        //rellenar los campos con la select del jugador actual
         nombreUsuario.setText("");
         battleTag.setText("");
         email.setText("");
         telefono.setText("");
 
         hiloconexion = new ObtenerWebService();
-        hiloconexion.execute(((MainActivity)getActivity()).otroJugadorNick);
+        hiloconexion.execute(((MainActivity) getActivity()).otroJugadorNick);
+
+
+        //3 casos: mi perfil, perfil de amigo, perfil de no-amigo
+        //caso 1: mi perfil
+        if(((MainActivity)getActivity()).miUsuarioNick.equals(((MainActivity)getActivity()).otroJugadorNick)) {
+            botonAmigar.setVisibility(View.INVISIBLE);
+        }
+        //casos 2 y 3: es otro jugador
+        else {
+            hiloComprobarAmigo = new ObtenerWebService3();
+            hiloComprobarAmigo.execute();
+        }
 
         return view;
     }
@@ -108,6 +127,12 @@ public class PerfilFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onClick(View v) {
+        hiloAmigarDesamigar = new ObtenerWebService2();
+        hiloAmigarDesamigar.execute();
     }
 
     /**
@@ -167,6 +192,7 @@ public class PerfilFragment extends Fragment {
                         devuelve = "ok";
 
                         //Saco algún campo de más por si acaso
+                        int id = jugadorJson.getInt("id_jugador");
                         String nombre = jugadorJson.getString("nick");
                         String correo = jugadorJson.getString("correo");
                         String idOnline = jugadorJson.getString("idonline");
@@ -176,6 +202,7 @@ public class PerfilFragment extends Fragment {
                         double longitud = jugadorJson.getDouble("longitud");
 
                         miJugador = new Jugador();
+                        miJugador.setID_Jugador(id);
                         miJugador.setNick(nombre);
                         miJugador.setCorreo(correo);
                         miJugador.setIDOnline(idOnline);
@@ -210,6 +237,26 @@ public class PerfilFragment extends Fragment {
                 telefono.setText(miJugador.getTelefono());
                 LatLng latLng = new LatLng(miJugador.getLatitud(), miJugador.getLongitud());
                 miImageButton.setImageResource(mThumbIds[miJugador.getAvatar()]);
+
+                //Locura padre
+                //3 casos: mi perfil, perfil de amigo, perfil de no-amigo
+//                //caso 1: mi perfil
+//                if(((MainActivity)getActivity()).miUsuarioNick.equals(((MainActivity)getActivity()).otroJugadorNick)) {
+//                    botonAmigar.setVisibility(View.INVISIBLE);
+//                }
+                //casos 2 y 3: es otro jugador
+//                else {
+//                    hiloComprobarAmigo = new ObtenerWebService3();
+//                    hiloComprobarAmigo.execute();
+//                    //caso 2: perfil de amigo
+//                    if(esAmigo) {
+//                        botonAmigar.setText(BORRARAMIGO);
+//                    }
+//                    //caso 3: perfil de no-amigo
+//                    else {
+//                        botonAmigar.setText(AGREGARAMIGO);
+//                    }
+//                }
             } else {
                 Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
             }
@@ -224,7 +271,7 @@ public class PerfilFragment extends Fragment {
 
             //String cadena = params[0];
             String cadenaConexion;
-            if (esAmigo) {
+            if (!esAmigo) {
                 cadenaConexion = "http://mucedal.hol.es/appesports/amigar.php";
             } else {
                 cadenaConexion = "http://mucedal.hol.es/appesports/desamigar.php";
@@ -301,6 +348,14 @@ public class PerfilFragment extends Fragment {
         protected void onPostExecute(String s) {
 
             if (s == "ok") {
+                if(!esAmigo) {
+                    Toast.makeText(getActivity(), "Agregado con éxito", Toast.LENGTH_LONG).show();
+                    botonAmigar.setText(BORRARAMIGO);
+                } else {
+                    Toast.makeText(getActivity(), "Borrado con éxito", Toast.LENGTH_LONG).show();
+                    botonAmigar.setText(AGREGARAMIGO);
+                }
+                esAmigo = !esAmigo;
 //                Toast.makeText(getApplicationContext(), "Registrado con éxito", Toast.LENGTH_LONG).show();
 //                finish();
             }
@@ -391,10 +446,14 @@ public class PerfilFragment extends Fragment {
         protected void onPostExecute(String s) {
 
             if (s == "ok") {
+                Toast.makeText(getActivity(), "Es tu amigo", Toast.LENGTH_LONG).show();
                 esAmigo = true;
+                botonAmigar.setText(BORRARAMIGO);
             }
             else{
-//                Toast.makeText(getApplicationContext(), "Se produjo un error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "No es tu amigo", Toast.LENGTH_LONG).show();
+                esAmigo = false;
+                botonAmigar.setText(AGREGARAMIGO);
             }
             //super.onPostExecute(aVoid);
         }
