@@ -238,25 +238,6 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
                 LatLng latLng = new LatLng(miJugador.getLatitud(), miJugador.getLongitud());
                 miImageButton.setImageResource(mThumbIds[miJugador.getAvatar()]);
 
-                //Locura padre
-                //3 casos: mi perfil, perfil de amigo, perfil de no-amigo
-//                //caso 1: mi perfil
-//                if(((MainActivity)getActivity()).miUsuarioNick.equals(((MainActivity)getActivity()).otroJugadorNick)) {
-//                    botonAmigar.setVisibility(View.INVISIBLE);
-//                }
-                //casos 2 y 3: es otro jugador
-//                else {
-//                    hiloComprobarAmigo = new ObtenerWebService3();
-//                    hiloComprobarAmigo.execute();
-//                    //caso 2: perfil de amigo
-//                    if(esAmigo) {
-//                        botonAmigar.setText(BORRARAMIGO);
-//                    }
-//                    //caso 3: perfil de no-amigo
-//                    else {
-//                        botonAmigar.setText(AGREGARAMIGO);
-//                    }
-//                }
             } else {
                 Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
             }

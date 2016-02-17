@@ -53,6 +53,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     List<Torneo> listaTorneos;
     ObtenerWebService1 hiloconexion1;
     ObtenerWebService2 hiloDestornear;
+    ObtenerWebServiceAvatar hiloAvatar;
     int carga;
     static Integer[] mThumbIds = {
             R.drawable.profileicon10,
@@ -86,6 +87,8 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         lvstring = (ListView)view.findViewById(R.id.lvstring);
         hiloconexion1 = new ObtenerWebService1();
         hiloconexion1.execute(String.valueOf(((MainActivity) getActivity()).miUsuarioID));
+        hiloAvatar = new ObtenerWebServiceAvatar();
+        hiloAvatar.execute();
 
         adaptadorTorneos = new TorneoAdapter(getActivity(),listaTorneos, false);
         lvstring.setAdapter(adaptadorTorneos);
@@ -241,7 +244,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
             if (s == "ok") {
                 Toast.makeText((MainActivity) getActivity(), "código avatar: " + avatar, Toast.LENGTH_SHORT).show();
-                imagenUsuario.setImageResource(mThumbIds[avatar]);
+//                imagenUsuario.setImageResource(mThumbIds[avatar]);
                 adaptadorTorneos = new TorneoAdapter(getActivity(), listaTorneos, false);
                 lvstring.setAdapter(adaptadorTorneos);
                 Toast.makeText(getActivity(), "estoy entrando en onPostExecute", Toast.LENGTH_LONG).show();
@@ -358,5 +361,77 @@ public class MainFragment extends Fragment implements View.OnClickListener {
             //super.onPostExecute(aVoid);
         }
     }
+
+    public class ObtenerWebServiceAvatar extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            URL url = null;
+            String devuelve = "";
+            String cadenaConexion = "http://mucedal.hol.es/appesports/obtener_jugador_por_nick.php";
+            cadenaConexion += "?nick=" + ((MainActivity)getActivity()).miUsuarioNick;
+
+
+            try {
+                url = new URL(cadenaConexion);
+                HttpURLConnection urlConn;
+                urlConn = (HttpURLConnection) url.openConnection(); //Abrir la conexión
+                urlConn.setRequestProperty("User-Agent", "Mozilla/5.0" +
+                        " (Linux; Android 1.5; es-ES) Ejemplo HTTP");
+                int respuesta = urlConn.getResponseCode();
+                StringBuilder result = new StringBuilder();
+
+                if (respuesta == HttpURLConnection.HTTP_OK) {
+                    String line;
+                    BufferedReader br = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+                    while ((line = br.readLine()) != null) {
+                        result.append(line);
+                    }
+
+                    //Creamos un objeto JSONObject para poder acceder a los atributos (campos) del objeto.
+                    JSONObject respuestaJSON = new JSONObject(result.toString());   //Creo un JSONObject a partir del StringBuilder pasado a cadena
+                    //Accedemos al vector de resultados
+                    String resultJSON = respuestaJSON.getString("estado");   // estado es el nombre del campo en el JSON
+                    devuelve = resultJSON;
+                    if (resultJSON.equals("1") || resultJSON == "1") {
+                        JSONObject jugadorJson = respuestaJSON.getJSONObject("jugador");
+                        devuelve = "ok";
+
+                        avatar = jugadorJson.getInt("avatar");
+
+                    } else if (resultJSON.equals("2") || resultJSON == "2") {
+                        devuelve = "error";
+                    }
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return devuelve;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+
+            if (s == "ok") {
+                imagenUsuario.setImageResource(mThumbIds[avatar]);
+
+            } else {
+                Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
 }

@@ -4,19 +4,24 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_principal"
-            android:title="Inicio" />
+            android:title="Inicio"
+            android:icon="@drawable/inicioicon"/>
         <item
             android:id="@+id/nav_perfil"
-            android:title="Perfil" />
+            android:title="Perfil"
+            android:icon="@drawable/perfilicon"/>
         <item
             android:id="@+id/nav_torneos"
-            android:title="Torneos" />
+            android:title="Torneos"
+            android:icon="@drawable/torneosicon"/>
         <item
             android:id="@+id/nav_amigos"
-            android:title="Amigos" />
+            android:title="Amigos"
+            android:icon="@drawable/amigosicon"/>
         <item
             android:id="@+id/nav_busqueda"
-            android:title="Buscar amigos" />
+            android:title="Buscar amigos"
+            android:icon="@drawable/buscaricon"/>
 
     </group>
 

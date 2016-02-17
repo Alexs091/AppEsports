@@ -24,8 +24,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.io.FileNotFoundException;
@@ -298,5 +296,3 @@ public class MainActivity extends AppCompatActivity
         }
     }
 }
-
-//TODO: hacer algo con las preferencias que cojo

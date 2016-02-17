@@ -1,14 +1,9 @@
 -----Mejoras entrega 3-----
 
 //TODO//
-  Controlar comportamiento del botón atrás (Alex)
-  Cambiar iconos del mapa (Alex)
-  Incluir iconos en el Navigation Drawer. (Marco)
 
 //IN PROGRESS//
-  Insert/Select por servicios web. (Marco)
-  Dividir en 2 selects el main fragment (para usuario, y lista de torneos) porque el avatar no se muestra si el usuario no tiene torneos (Marco)
-  Controlar el avatar -1 (Alex)
+  Controlar comportamiento del botón atrás (Alex)
 
 //DONE//
   Login: mantener logueado. (Marco)
@@ -18,6 +13,9 @@
   Select para Perfil con webservice (Marco)
   PerfilFragment -> si es amigo, botón de 'desamigar', si no, botón de 'amigar' (Marco)
   Tornear y destornear(Marco)
+  Dividir en 2 selects el main fragment (para usuario, y lista de torneos) porque el avatar no se muestra si el usuario no tiene torneos (Marco)
+  Insert/Select por servicios web. (Marco)
+  Incluir iconos en el Navigation Drawer. (Marco)
   Cargar fragment inicio tras loguearte. (Alex)
   Recoger posición (latitud, longitud) en el registro. (Alex)
   Opcion en Amigos: Mapa con los amigos(Alex)
@@ -28,19 +26,21 @@
   Cuando clicke en un jugador en BuscarJugador, o en Amigosfragment debe llevarte a su perfilFragment(Alex)
   En perfilFragment saldrá un botón que, dependiendo de si el jugador es amigo o no te permitirá hacerte amigo o 'desamigarte'(Alex)
   Dejar perfilFragment bonito (Alex)
+  Controlar el avatar -1 (Alex)
+  Cambiar iconos del mapa (Alex)
 
 -----Pequeñas tonterías para rematar-----
 
 //TODO//
-  Quitar todos los TODO de debug (Marco)
-  Controlar botón 'atrás': que vaya al mainFragment (Alex)
+  Quitar todos los TOAST de debug (Marco)
+  Controlar botón 'atrás': navegar entre fragments (Alex)
   Validar que el usuario ya existe de verdad, y no a modo cutre a pelo en el código
-  Quitar toast en amigos
-  Listas de torneos: reducir información
 
 //DONE//
   Quitar label con las coordenadas en activity de login
   Fijar todas las activities a portrait
+  icono de app
+  Renombrar la app
 
 -----BBDD----- (Marco)
 Jugador //DONE

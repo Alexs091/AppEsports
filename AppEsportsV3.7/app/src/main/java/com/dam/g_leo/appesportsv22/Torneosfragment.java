@@ -161,13 +161,7 @@ public class Torneosfragment extends Fragment {
                     }
                 }
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
+            } catch (JSONException | ParseException | IOException e) {
                 e.printStackTrace();
             }
             return devuelve;
