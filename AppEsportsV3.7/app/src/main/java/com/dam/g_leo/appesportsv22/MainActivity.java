@@ -140,8 +140,8 @@ public class MainActivity extends AppCompatActivity
             escribirMemoriaInterna(Login.ficheroLogin, "");
             //Cierro la activity
             finish();
-            //Cierro la aplicación
-            System.exit(0);
+            //Muestro Login
+            Intent intent = new Intent(this, Login.class);
             return true;
         }
 
