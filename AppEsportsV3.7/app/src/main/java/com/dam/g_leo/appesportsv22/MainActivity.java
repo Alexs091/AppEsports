@@ -136,10 +136,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.action_logout) {
             //Borro datos de login -> Guardo fichero en blanco
             escribirMemoriaInterna(Login.ficheroLogin, "");
-            //Cierro la activity
-            finish();
             //Muestro Login
             Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
+            //Cierro la activity
+            finish();
             return true;
         }
 
