@@ -1,13 +1,13 @@
 -----Mejoras entrega 3-----
 
 //TODO//
+  Controlar comportamiento del botón atrás (Alex)
   Cambiar iconos del mapa (Alex)
-  Dividir en 2 selects el main fragment (para usuario, y lista de torneos) (Marco)
   Incluir iconos en el Navigation Drawer. (Marco)
 
 //IN PROGRESS//
   Insert/Select por servicios web. (Marco)
-  Tornear y destornear(Marco)
+  Dividir en 2 selects el main fragment (para usuario, y lista de torneos) porque el avatar no se muestra si el usuario no tiene torneos (Marco)
   Controlar el avatar -1 (Alex)
 
 //DONE//
@@ -17,6 +17,7 @@
   Utilizar contents provider para sugerir amigos. (Marco)
   Select para Perfil con webservice (Marco)
   PerfilFragment -> si es amigo, botón de 'desamigar', si no, botón de 'amigar' (Marco)
+  Tornear y destornear(Marco)
   Cargar fragment inicio tras loguearte. (Alex)
   Recoger posición (latitud, longitud) en el registro. (Alex)
   Opcion en Amigos: Mapa con los amigos(Alex)
@@ -48,7 +49,7 @@ Jugador //DONE
   -Longitud
   -Teléfono
 
------Servicios web----- (Marco)
+-----Servicios web----- (Marco) //DONE
 Jugador //DONE
 	-Login //DONE
   -Registrar //DONE
@@ -56,11 +57,11 @@ Jugador //DONE
 Torneo
   -Mis torneos //DONE
   -Torneos no inscrito //DONE
-  -Inscribir en torneo //DONE (solo php)
-  -Desinscribir/Desuscribir en torneo //DONE (solo php)
+  -Inscribir en torneo //DONE
+  -Desinscribir/Desuscribir en torneo //DONE
 Amigos
   -Mis amigos //DONE
-  -Mis amigos (búsqueda por nombre) //DONE (solo php)
+  -Mis amigos (búsqueda por nombre) //DONE (solo php) //funcionalidad descartada
   -Buscar jugador //DONE
-  -Añadir amigo //DONE (solo php)
+  -Añadir amigo //DONE
   -Amigos por contents provider //DONE

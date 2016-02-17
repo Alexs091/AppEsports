@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,8 +24,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -50,6 +52,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
     TorneoAdapter adaptadorTorneos;
     List<Torneo> listaTorneos;
     ObtenerWebService1 hiloconexion1;
+    ObtenerWebService2 hiloDestornear;
     int carga;
     static Integer[] mThumbIds = {
             R.drawable.profileicon10,
@@ -75,7 +78,6 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_main, container, false);
         listaTorneos = new ArrayList<Torneo>();
-        //String[] args = new String[] {String.valueOf(((MainActivity)getActivity()).miUsuarioID)};
 
         TextView user = (TextView) view.findViewById(R.id.NickUsuario);
         user.setText(((MainActivity)getActivity()).miUsuarioNick);
@@ -90,18 +92,15 @@ public class MainFragment extends Fragment implements View.OnClickListener {
 
         lvstring.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
+                                    final int position, long id) {
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(view.getContext());
                 dialogo1.setTitle(listaTorneos.get(position).getNombre());
                 dialogo1.setMessage("¿Quieres darte de baja de este torneo?");
                 dialogo1.setCancelable(false);
                 dialogo1.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        Fragment frg = getFragmentManager().findFragmentByTag("MainFragment");
-                        final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        ft.detach(frg);
-                        ft.attach(frg);
-                        ft.commit();
+                        hiloDestornear = new ObtenerWebService2();
+                        hiloDestornear.execute(String.valueOf(listaTorneos.get(position).getIDTorneo()));
                     }
                 });
                 dialogo1.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -212,19 +211,11 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                         for (int i = 0; i < torneosJSON.length(); i++) {
                             int idTorneo = torneosJSON.getJSONObject(i).getInt("id_torneo");
                             String nombre = torneosJSON.getJSONObject(i).getString("nombre");
-                            //devuelve += nombre + ";;;";
-
                             Date fechaComienzo = formatter.parse(torneosJSON.getJSONObject(i).getString("fecha_comienzo"));
-                            //devuelve += fechaComienzo + ";;;";
                             int participantes = torneosJSON.getJSONObject(i).getInt("inscritos");
-                            //devuelve += participantes + ";;;";
                             int maxParticipantes = torneosJSON.getJSONObject(i).getInt("numero_participantes");
-                            //devuelve += maxParticipantes + ";;;";
 
-                            Torneo torneo = null;
-
-                            torneo = new Torneo(idTorneo, nombre, null, fechaComienzo, participantes, maxParticipantes);
-
+                            Torneo torneo  = new Torneo(idTorneo, nombre, null, fechaComienzo, participantes, maxParticipantes);
                             listaTorneos.add(torneo);
                         }
                         avatar = torneosJSON.getJSONObject(0).getInt("avatar");
@@ -270,6 +261,101 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
+        }
+    }
+
+    //destornear
+    public class ObtenerWebService2 extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            //String cadena = params[0];
+            String cadenaConexion;
+            cadenaConexion = "http://mucedal.hol.es/appesports/destornear.php";
+
+            URL url = null;
+            try {
+                url = new URL(cadenaConexion);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            String devuelve = "";
+
+            try {
+                HttpURLConnection urlConn;
+
+                urlConn = (HttpURLConnection)url.openConnection();
+                urlConn.setDoInput(true);
+                urlConn.setDoOutput(true);
+                urlConn.setUseCaches(false);
+                urlConn.setRequestProperty("Content-Type", "application/json");
+                urlConn.setRequestProperty("Accept", "application/json");
+                urlConn.connect();
+
+                //Creo el Objeto JSON
+                JSONObject jsonParam = new JSONObject();
+                jsonParam.put("id_jugador", ((MainActivity)getActivity()).miUsuarioID );
+                jsonParam.put("id_torneo", params[0]);
+
+                // Envio los parámetros post.
+                OutputStream os = urlConn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(jsonParam.toString());
+                writer.flush();
+                writer.close();
+
+                int respuesta = urlConn.getResponseCode();
+
+                StringBuilder result = new StringBuilder();
+
+                if (respuesta == HttpURLConnection.HTTP_OK) {
+                    String line;
+                    BufferedReader br = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+                    while ((line = br.readLine()) != null) {
+                        result.append(line);
+                        //response+=line;
+                    }
+
+                    //Creamos un objeto JSONObject para poder acceder a los atributos (campos) del objeto.
+                    JSONObject respuestaJSON = new JSONObject(result.toString());   //Creo un JSONObject a partir del StringBuilder pasado a cadena
+                    //Accedemos al vector de resultados
+                    String resultJSON = respuestaJSON.getString("estado");   // estado es el nombre del campo en el JSON
+
+                    if (resultJSON.equals("1") || resultJSON == "1") {
+                        devuelve = "ok";
+                    } else if (resultJSON.equals("2") || resultJSON == "2") {
+                        devuelve = "error";
+                    }
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return devuelve;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            if (s == "ok") {
+                Fragment frg = getFragmentManager().findFragmentByTag("MainFragment");
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(frg);
+                ft.attach(frg);
+                ft.commit();
+                Toast.makeText(getActivity(), "Desinscripción con éxito", Toast.LENGTH_SHORT).show();
+            }
+            else{
+//                Toast.makeText(getApplicationContext(), "Se produjo un error", Toast.LENGTH_SHORT).show();
+            }
+            //super.onPostExecute(aVoid);
         }
     }
 
