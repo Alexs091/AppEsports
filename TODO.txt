@@ -1,18 +1,14 @@
 -----Mejoras entrega 3-----
 
 //TODO//
-  Controlar la recogida de datos en perfil (Alex)
-  Cuando clicke en un jugador en BuscarJugador, o en Amigosfragment debe llevarte a su perfilFragment(Alex)
-  /*En perfilfragment saldra un boton que, dependiendo de donde vengas será hacer amigo, o quitar amigo(Alex)*/
-  En perfilFragment saldrá un botón que, dependiendo de si el jugador es amigo o no te permitirá hacerte amigo o 'desamigarte'(Alex)
-  Dejar perfilFragment bonito (Alex)
   Cambiar iconos del mapa (Alex)
-  PerfilFragment -> si es amigo, botón de 'desamigar', si no, botón de 'amigar' (Marco)
   Dividir en 2 selects el main fragment (para usuario, y lista de torneos) (Marco)
   Incluir iconos en el Navigation Drawer. (Marco)
 
 //IN PROGRESS//
   Insert/Select por servicios web. (Marco)
+  Tornear y destornear(Marco)
+  Controlar el avatar -1 (Alex)
 
 //DONE//
   Login: mantener logueado. (Marco)
@@ -20,12 +16,17 @@
   Nuevo fragment para buscar jugadores. (Marco) (Habría que mejorarlo si hay tiempo)
   Utilizar contents provider para sugerir amigos. (Marco)
   Select para Perfil con webservice (Marco)
+  PerfilFragment -> si es amigo, botón de 'desamigar', si no, botón de 'amigar' (Marco)
   Cargar fragment inicio tras loguearte. (Alex)
   Recoger posición (latitud, longitud) en el registro. (Alex)
   Opcion en Amigos: Mapa con los amigos(Alex)
   Registro: rediseñar. (Alex)
   Fragment de Torneo: opcion inscribir/desinscribir y lista de participantes con listview. (Alex)
   cambiar imagen del perfil principal con las que se reciben de la base de datos(Alex)
+  Controlar la recogida de datos en perfil (Alex)
+  Cuando clicke en un jugador en BuscarJugador, o en Amigosfragment debe llevarte a su perfilFragment(Alex)
+  En perfilFragment saldrá un botón que, dependiendo de si el jugador es amigo o no te permitirá hacerte amigo o 'desamigarte'(Alex)
+  Dejar perfilFragment bonito (Alex)
 
 -----Pequeñas tonterías para rematar-----
 
