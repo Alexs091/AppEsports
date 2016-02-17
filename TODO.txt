@@ -1,18 +1,18 @@
 -----Mejoras entrega 3-----
 
 //TODO//
-  Cambiar iconos del mapa (Alex)
   Dividir en 2 selects el main fragment (para usuario, y lista de torneos) (Marco)
   Incluir iconos en el Navigation Drawer. (Marco)
 
 //IN PROGRESS//
   Insert/Select por servicios web. (Marco)
   Tornear y destornear(Marco)
-  Controlar el avatar -1 (Alex)
 
 //DONE//
   Login: mantener logueado. (Marco)
   Registro: insertar en BBDD. (Marco)
+  Cambiar iconos del mapa (Alex)
+  Controlar el avatar -1 (Alex)
   Nuevo fragment para buscar jugadores. (Marco) (Habría que mejorarlo si hay tiempo)
   Utilizar contents provider para sugerir amigos. (Marco)
   Select para Perfil con webservice (Marco)

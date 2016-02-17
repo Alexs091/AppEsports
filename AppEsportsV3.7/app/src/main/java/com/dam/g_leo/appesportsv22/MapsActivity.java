@@ -2,11 +2,13 @@ package com.dam.g_leo.appesportsv22;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -16,6 +18,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private ArrayList<Jugador> listaAmigos;
+    static Integer[] mThumbIds = {
+            R.drawable.miniprofileicon10,
+            R.drawable.miniprofileicon13,
+            R.drawable.miniprofileicon23,
+            R.drawable.miniprofileicon24old,
+            R.drawable.miniprofileicon29old,
+            R.drawable.miniavataricon
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +55,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Sydney and move the camera
         for (Jugador amigo:listaAmigos) {
+            Toast.makeText(this, "código avatar: " + amigo.getAvatar(), Toast.LENGTH_SHORT).show();
             mMap.addMarker(new MarkerOptions().position(new LatLng(amigo.getLatitud(),
-                    amigo.getLongitud())).title(amigo.getIDOnline()));
+                    amigo.getLongitud())).title(amigo.getIDOnline()).icon(BitmapDescriptorFactory.fromResource(mThumbIds[amigo.getAvatar()])));
         }
         LatLng spain = new LatLng(40, -4);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(spain));

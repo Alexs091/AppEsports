@@ -179,8 +179,10 @@ public class AmigosFragment extends Fragment implements View.OnClickListener{
                             int id_jugador = jugadoresJSON.getJSONObject(i).getInt("id_jugador");
                             double latitud = jugadoresJSON.getJSONObject(i).getDouble("latitud");
                             double longitud = jugadoresJSON.getJSONObject(i).getDouble("longitud");
+                            int avatar=jugadoresJSON.getJSONObject(i).getInt("avatar");
 
                             Jugador jugador = new Jugador(id_jugador, idonline, latitud, longitud, nick);
+                            jugador.setAvatar(avatar);
                             listaAmigos.add(jugador);
                         }
                     } else if (resultJSON.equals("2") || resultJSON == "2") {

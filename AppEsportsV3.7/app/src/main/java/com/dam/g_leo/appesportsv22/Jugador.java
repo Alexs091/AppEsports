@@ -16,6 +16,7 @@ public class Jugador implements Parcelable{
         Correo = in.readString();
         Latitud = in.readDouble();
         Longitud = in.readDouble();
+        Avatar = in.readInt();
     }
 
     public static final Creator<Jugador> CREATOR = new Creator<Jugador>() {
@@ -161,5 +162,6 @@ public class Jugador implements Parcelable{
         dest.writeString(Correo);
         dest.writeDouble(Latitud);
         dest.writeDouble(Longitud);
+        dest.writeInt(Avatar);
     }
 }

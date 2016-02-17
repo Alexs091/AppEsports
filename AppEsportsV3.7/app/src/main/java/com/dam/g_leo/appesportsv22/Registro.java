@@ -234,14 +234,14 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
 
                 if(registrado){
                     Toast.makeText(Registro.this, "Has sido registrado correctamente", Toast.LENGTH_SHORT).show();
-                    switch(SelectImagen.posicionImagen){
-
+                    if(SelectImagen.posicionImagen == -1){
+                        SelectImagen.posicionImagen = 5;
                     }
                     hiloconexion = new ObtenerWebService();
                     hiloconexion.execute(nombreUsuario.getText().toString(), contraseña.getText().toString(), email.getText().toString()
                             , battleTag.getText().toString(), Telefono.getText().toString(), String.valueOf(SelectImagen.posicionImagen),
                             String.valueOf(location.getLatitude()), String.valueOf(location.getLongitude()));
-                    SelectImagen.posicionImagen = 6;
+                    SelectImagen.posicionImagen = -1;
                     this.finish();
                 }
                 else{
