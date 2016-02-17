@@ -21,8 +21,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -44,6 +47,7 @@ public class Torneosfragment extends Fragment {
     ListView lvstring;
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     ObtenerWebService hiloconexion;
+    ObtenerWebService2 hiloTornear;
     //boolean haySonido;
 
     public Torneosfragment() {
@@ -58,30 +62,6 @@ public class Torneosfragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_torneos, container, false);
         listaTorneos = new ArrayList<Torneo>();
 
-        //String[] args = new String[] {String.valueOf(((MainActivity)getActivity()).miUsuarioID)};
-        /*Cursor c = ((MainActivity)getActivity()).sqLiteDatabase.rawQuery("SELECT t.nombre, t.fecha_fin_registro, t.fecha_comienzo, (select count(*) from inscripcion where id_torneo = i.id_torneo and id_torneo = t.id) as 'inscritos', t.numero_participantes \n" +
-                "FROM jugador j, torneo t, inscripcion i\n" +
-                "where t.id = i.id_torneo\n" +
-                "and j.id = ?\n" +
-                "and j.id not in (Select id_usuario from inscripcion where id_torneo = t.id)\n" +
-                "UNION\n" +
-                "SELECT t.nombre, t.fecha_fin_registro, t.fecha_comienzo, (select count(*) from inscripcion where id_torneo = i.id_torneo and id_torneo = t.id) as 'inscritos', t.numero_participantes \n" +
-                "FROM jugador j, torneo t, inscripcion i\n" +
-                "where t.id not in (select id_torneo from inscripcion)\n" +
-                "and j.id = i.id_usuario", args);
-        if(c.moveToFirst()){
-            do{
-                Torneo torneo1 = null;
-                try {
-                    torneo1 = new Torneo(c.getString(0),formatter.parse(c.getString(1)),
-                            formatter.parse(c.getString(2)), c.getInt(3), c.getInt(4));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                listaTorneos.add(torneo1);
-            }while(c.moveToNext());
-        }*/
-
         //TextView user = (TextView) view.findViewById(R.id.NickUsuario);
         lvstring = (ListView)view.findViewById(R.id.lvstring);
 
@@ -93,18 +73,16 @@ public class Torneosfragment extends Fragment {
 
         lvstring.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
+                                    final int position, long id) {
                 AlertDialog.Builder dialogo1 = new AlertDialog.Builder(view.getContext());
                 dialogo1.setTitle(listaTorneos.get(position).getNombre());
                 dialogo1.setMessage("¿Quieres inscribirte en este torneo?");
                 dialogo1.setCancelable(false);
                 dialogo1.setPositiveButton("Si", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogo1, int id) {
-                        Fragment frg = getFragmentManager().findFragmentByTag("Torneosfragment");
-                        final FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        ft.detach(frg);
-                        ft.attach(frg);
-                        ft.commit();
+                        //TODO tornear aquí
+                        hiloTornear = new ObtenerWebService2();
+                        hiloTornear.execute(String.valueOf(listaTorneos.get(position).getIDTorneo()));
                     }
                 });
                 dialogo1.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -124,6 +102,7 @@ public class Torneosfragment extends Fragment {
         return view;
     }
 
+    //Para cargar lista de torneos
     public class ObtenerWebService extends AsyncTask<String, Integer, String> {
 
         @Override
@@ -219,4 +198,97 @@ public class Torneosfragment extends Fragment {
         }
     }
 
+    //tornear
+    public class ObtenerWebService2 extends AsyncTask<String, Integer, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String cadenaConexion;
+            cadenaConexion = "http://mucedal.hol.es/appesports/tornear.php";
+
+            URL url = null;
+            try {
+                url = new URL(cadenaConexion);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            String devuelve = "";
+
+            try {
+                HttpURLConnection urlConn;
+
+                urlConn = (HttpURLConnection)url.openConnection();
+                urlConn.setDoInput(true);
+                urlConn.setDoOutput(true);
+                urlConn.setUseCaches(false);
+                urlConn.setRequestProperty("Content-Type", "application/json");
+                urlConn.setRequestProperty("Accept", "application/json");
+                urlConn.connect();
+
+                //Creo el Objeto JSON
+                JSONObject jsonParam = new JSONObject();
+                jsonParam.put("id_jugador", ((MainActivity)getActivity()).miUsuarioID );
+                jsonParam.put("id_torneo", params[0]);
+
+                // Envio los parámetros post.
+                OutputStream os = urlConn.getOutputStream();
+                BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(os, "UTF-8"));
+                writer.write(jsonParam.toString());
+                writer.flush();
+                writer.close();
+
+                int respuesta = urlConn.getResponseCode();
+
+                StringBuilder result = new StringBuilder();
+
+                if (respuesta == HttpURLConnection.HTTP_OK) {
+                    String line;
+                    BufferedReader br = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+                    while ((line = br.readLine()) != null) {
+                        result.append(line);
+                        //response+=line;
+                    }
+
+                    //Creamos un objeto JSONObject para poder acceder a los atributos (campos) del objeto.
+                    JSONObject respuestaJSON = new JSONObject(result.toString());   //Creo un JSONObject a partir del StringBuilder pasado a cadena
+                    //Accedemos al vector de resultados
+                    String resultJSON = respuestaJSON.getString("estado");   // estado es el nombre del campo en el JSON
+
+                    if (resultJSON.equals("1") || resultJSON == "1") {
+                        devuelve = "ok";
+                    } else if (resultJSON.equals("2") || resultJSON == "2") {
+                        devuelve = "error";
+                    }
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return devuelve;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            if (s == "ok") {
+                Fragment frg = getFragmentManager().findFragmentByTag("Torneosfragment");
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(frg);
+                ft.attach(frg);
+                ft.commit();
+                Toast.makeText(getActivity(), "Inscrito con éxito", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(getActivity(), "Error: no se pudo inscribir", Toast.LENGTH_SHORT).show();
+            }
+            //super.onPostExecute(aVoid);
+        }
+    }
 }

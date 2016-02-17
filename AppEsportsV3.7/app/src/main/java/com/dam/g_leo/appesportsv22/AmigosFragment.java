@@ -1,16 +1,14 @@
 package com.dam.g_leo.appesportsv22;
 
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +27,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -57,7 +53,6 @@ public class AmigosFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_amigos, container, false);
         listaAmigos = new ArrayList<Jugador>();
@@ -140,6 +135,7 @@ public class AmigosFragment extends Fragment implements View.OnClickListener{
                 cadenaConexion = "http://mucedal.hol.es/appesports/misamigos.php";
                 cadenaConexion += "?id=" + params[1];
             }
+            //Esto era para buscar un jugador dentro de tu lista de amigos, pero no se llegó a implementar
             else if (params[0] == BUSQUEDA) {
                 cadenaConexion = "http://mucedal.hol.es/appesports/misamigos.php"; //TODO: apuntar al php correcto
                 cadenaConexion += "?id=" + params[1];
