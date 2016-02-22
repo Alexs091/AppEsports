@@ -243,15 +243,14 @@ public class MainFragment extends Fragment implements View.OnClickListener {
         protected void onPostExecute(String s) {
 
             if (s == "ok") {
-                Toast.makeText((MainActivity) getActivity(), "código avatar: " + avatar, Toast.LENGTH_SHORT).show();
+                //Toast.makeText((MainActivity) getActivity(), "código avatar: " + avatar, Toast.LENGTH_SHORT).show();
 //                imagenUsuario.setImageResource(mThumbIds[avatar]);
                 adaptadorTorneos = new TorneoAdapter(getActivity(), listaTorneos, false);
                 lvstring.setAdapter(adaptadorTorneos);
-                Toast.makeText(getActivity(), "estoy entrando en onPostExecute", Toast.LENGTH_LONG).show();
                 lvstring.refreshDrawableState(); //esto probablemente no haga falta, lo puse por un error mío
                 //pero no lo quito porque no me apetece probar si funciona sin esto
             } else {
-                Toast.makeText((MainActivity) getActivity(), s, Toast.LENGTH_SHORT).show();
+                //Toast.makeText((MainActivity) getActivity(), s, Toast.LENGTH_SHORT).show();
             }
             //super.onPostExecute(aVoid);
         }
@@ -356,7 +355,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(getActivity(), "Desinscripción con éxito", Toast.LENGTH_SHORT).show();
             }
             else{
-//                Toast.makeText(getApplicationContext(), "Se produjo un error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Se produjo un error", Toast.LENGTH_SHORT).show();
             }
             //super.onPostExecute(aVoid);
         }
@@ -428,7 +427,7 @@ public class MainFragment extends Fragment implements View.OnClickListener {
                 imagenUsuario.setImageResource(mThumbIds[avatar]);
 
             } else {
-                Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
             }
         }
     }

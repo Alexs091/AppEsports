@@ -239,7 +239,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
                 miImageButton.setImageResource(mThumbIds[miJugador.getAvatar()]);
 
             } else {
-                Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -337,11 +337,9 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
                     botonAmigar.setText(AGREGARAMIGO);
                 }
                 esAmigo = !esAmigo;
-//                Toast.makeText(getApplicationContext(), "Registrado con éxito", Toast.LENGTH_LONG).show();
-//                finish();
             }
             else{
-//                Toast.makeText(getApplicationContext(), "Se produjo un error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Se produjo un error", Toast.LENGTH_SHORT).show();
             }
             //super.onPostExecute(aVoid);
         }
@@ -427,12 +425,10 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         protected void onPostExecute(String s) {
 
             if (s == "ok") {
-                Toast.makeText(getActivity(), "Es tu amigo", Toast.LENGTH_LONG).show();
                 esAmigo = true;
                 botonAmigar.setText(BORRARAMIGO);
             }
             else{
-                Toast.makeText(getActivity(), "No es tu amigo", Toast.LENGTH_LONG).show();
                 esAmigo = false;
                 botonAmigar.setText(AGREGARAMIGO);
             }

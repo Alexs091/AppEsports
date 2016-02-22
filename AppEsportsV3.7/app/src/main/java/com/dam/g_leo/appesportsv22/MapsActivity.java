@@ -1,8 +1,7 @@
 package com.dam.g_leo.appesportsv22;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -55,7 +54,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Sydney and move the camera
         for (Jugador amigo:listaAmigos) {
-            Toast.makeText(this, "código avatar: " + amigo.getAvatar(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "código avatar: " + amigo.getAvatar(), Toast.LENGTH_SHORT).show();
             mMap.addMarker(new MarkerOptions().position(new LatLng(amigo.getLatitud(),
                     amigo.getLongitud())).title(amigo.getIDOnline()).icon(BitmapDescriptorFactory.fromResource(mThumbIds[amigo.getAvatar()])));
         }

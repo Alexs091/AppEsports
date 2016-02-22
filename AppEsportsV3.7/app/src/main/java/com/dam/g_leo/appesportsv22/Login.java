@@ -1,18 +1,9 @@
 package com.dam.g_leo.appesportsv22;
 
-import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -97,12 +87,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
             BufferedReader fin = new BufferedReader(new InputStreamReader(openFileInput(nombreFichero)));
             retorno += fin.readLine();
             fin.close();
-            /*String*/
             user = retorno.substring(0, retorno.indexOf(";"));
-            Toast.makeText(this, user, Toast.LENGTH_SHORT).show();
-            /*String*/
+            //Toast.makeText(this, user, Toast.LENGTH_SHORT).show();
             pass = retorno.substring(retorno.indexOf(";") + 1);
-            Toast.makeText(this, pass, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, pass, Toast.LENGTH_SHORT).show();
             comprobarLogin(user, pass);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -237,8 +225,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 //Cierro la activity de login
                 finish();
             } else {
-                //TODO: quitar esta linea (de momento me sirve para saber cuándo ejecuta los sweb)
-                Toast.makeText(getApplicationContext(), respuestaLogin /*+ localizacion*/, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), respuestaLogin /*+ localizacion*/, Toast.LENGTH_SHORT).show();
             }
             //super.onPostExecute(aVoid);
         }

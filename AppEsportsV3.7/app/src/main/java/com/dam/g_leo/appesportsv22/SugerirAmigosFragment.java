@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -215,7 +214,7 @@ public class SugerirAmigosFragment extends Fragment implements View.OnClickListe
                 lvstring.refreshDrawableState(); //esto probablemente no haga falta, lo puse por un error mío
                 //pero no lo quito porque no me apetece probar si funciona sin esto
             } else {
-                Toast.makeText((MainActivity) getActivity(), s, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
             }
             //super.onPostExecute(aVoid);
         }

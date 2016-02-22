@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -207,7 +206,7 @@ public class AmigosFragment extends Fragment implements View.OnClickListener{
                 //pero no lo quito porque no me apetece probar si funciona sin esto
             }
             else{
-                Toast.makeText((MainActivity) getActivity(), s, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
             }
             //super.onPostExecute(aVoid);
         }

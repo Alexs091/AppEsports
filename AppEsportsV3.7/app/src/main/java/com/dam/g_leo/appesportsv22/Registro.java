@@ -2,11 +2,9 @@ package com.dam.g_leo.appesportsv22;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.TypedArray;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -16,14 +14,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Gallery;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -233,7 +226,7 @@ public class Registro extends AppCompatActivity implements View.OnClickListener 
                 }
 
                 if(registrado){
-                    Toast.makeText(Registro.this, "Has sido registrado correctamente", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Registro.this, "Has sido registrado correctamente", Toast.LENGTH_SHORT).show();
                     if(SelectImagen.posicionImagen == -1){
                         SelectImagen.posicionImagen = 5;
                     }

@@ -21,10 +21,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
     public int miUsuarioID;
     String miUsuarioNick, otroJugadorNick;
+    public boolean estoyEnMainFragment = true;
 
 
     @Override
@@ -61,15 +62,15 @@ public class MainActivity extends AppCompatActivity
 
 
         //Abrimos la base de datos "AppEsports" en modo escritura
-        BDAppesports bdAlumnos = new BDAppesports(this, "AppEsports", null, 1);
-        sqLiteDatabase = bdAlumnos.getWritableDatabase();
+//        BDAppesports bdAlumnos = new BDAppesports(this, "AppEsports", null, 1);
+//        sqLiteDatabase = bdAlumnos.getWritableDatabase();
         /////////////////////////////////////////
 
         //Recogemos datos de usuario del login
         Bundle weeklyHumbleBundle = this.getIntent().getExtras();
-        miUsuarioID =  weeklyHumbleBundle.getInt("id");
+        miUsuarioID = weeklyHumbleBundle.getInt("id");
         miUsuarioNick = weeklyHumbleBundle.getString("user");
-        Toast.makeText(this, miUsuarioID + " - " + miUsuarioNick, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, miUsuarioID + " - " + miUsuarioNick, Toast.LENGTH_SHORT).show();
 
         //Navigation drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -162,8 +163,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_amigos) {
             abrirFragmentAmigos();
         } else if (id == R.id.nav_busqueda) {
-                abrirFragmentBuscar();
-            }
+            abrirFragmentBuscar();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -172,6 +173,7 @@ public class MainActivity extends AppCompatActivity
 
     public void abrirFragmentPerfil() {
         otroJugadorNick = miUsuarioNick;
+        estoyEnMainFragment = false;
         //Paso 1: Obtener la instancia del administrador de fragmentos
         FragmentManager fragmentManager = getFragmentManager();
 
@@ -187,6 +189,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void abrirFragmentMain() {
+        estoyEnMainFragment = true;
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         MainFragment fragment = new MainFragment();
@@ -195,6 +198,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void abrirFragmentTorneos() {
+        estoyEnMainFragment = false;
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Torneosfragment fragment = new Torneosfragment();
@@ -203,6 +207,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void abrirFragmentAmigos() {
+        estoyEnMainFragment = false;
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         AmigosFragment fragment = new AmigosFragment();
@@ -211,11 +216,24 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void abrirFragmentBuscar() {
+        estoyEnMainFragment = false;
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         BuscarFragment fragment = new BuscarFragment();
         fragmentTransaction.replace(R.id.layoutPrincipal, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            // Esto es lo que hace mi botón al pulsar ir a atrás
+            if(!estoyEnMainFragment) {
+                abrirFragmentMain();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -254,7 +272,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
         Sensor mySensor = sensorEvent.sensor;
-        if(haySonido) {
+        if (haySonido) {
             if (mySensor.getType() == Sensor.TYPE_ACCELEROMETER) {
                 float x = sensorEvent.values[0];
                 float y = sensorEvent.values[1];

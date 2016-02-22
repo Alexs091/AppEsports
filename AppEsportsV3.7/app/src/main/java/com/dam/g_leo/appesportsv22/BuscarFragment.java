@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -166,7 +165,7 @@ public class BuscarFragment extends Fragment implements View.OnClickListener {
                 //pero no lo quito porque no me apetece probar si funciona sin esto
             }
             else{
-                Toast.makeText((MainActivity) getActivity(), s, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
             }
             //super.onPostExecute(aVoid);
         }

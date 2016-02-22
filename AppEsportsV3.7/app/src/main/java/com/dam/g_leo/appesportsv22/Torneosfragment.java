@@ -177,7 +177,7 @@ public class Torneosfragment extends Fragment {
                 lvstring.setAdapter(adaptadorTorneos);
                 lvstring.refreshDrawableState();
             } else {
-                Toast.makeText((MainActivity) getActivity(), s, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
             }
         }
 
