@@ -11,6 +11,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
@@ -51,7 +52,9 @@ public class MainActivity extends AppCompatActivity
     public int miUsuarioID;
     String miUsuarioNick, otroJugadorNick;
     public boolean estoyEnMainFragment = true;
-
+    MediaPlayer mediaplayer = new MediaPlayer();
+    int media_length;
+    boolean hasMusic = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity
         soundPool = new SoundPool(8, AudioManager.STREAM_MUSIC, 0);
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
         carga = soundPool.load(this, R.raw.notification1, 1);
+        mediaplayer = mediaplayer.create(this, R.raw.appesportsmusic);
         abrirFragmentMain();
     }
 
@@ -98,12 +102,24 @@ public class MainActivity extends AppCompatActivity
         //Recoger preferencias de usuario
         recogerPreferencias();
         senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        if (hasMusic) {
+            if (!mediaplayer.isPlaying()) {
+                mediaplayer.seekTo(media_length);
+                mediaplayer.start();
+            }
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         senSensorManager.unregisterListener(this);
+        if (hasMusic) {
+            //if (!mediaplayer.isPlaying()) {
+            media_length = mediaplayer.getCurrentPosition();
+                mediaplayer.pause();
+            //}
+        }
     }
 
     @Override
@@ -258,6 +274,11 @@ public class MainActivity extends AppCompatActivity
             hayNotificacion = true;
         } else {
             hayNotificacion = false;
+        }
+        if (preferences.getBoolean("musica", true)) {
+            hasMusic = true;
+        } else {
+            hasMusic = false;
         }
         idioma = preferences.getString("idioma", "No se ha seleccionado un idioma");
         tema = preferences.getString("tema", "No se ha seleccionado un tema");

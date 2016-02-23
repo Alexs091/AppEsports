@@ -6,6 +6,10 @@
             android:title="Sonido"
             android:summary="Seleccione si quiere sonido en su App"/>
         <SwitchPreference
+            android:key="musica"
+            android:title="Música"
+            android:summary="Seleccione si quiere música en su App"/>
+        <SwitchPreference
             android:key="vibracion"
             android:title="Vibración"
             android:summary="Seleccione si quiere vibración en su App"/>
